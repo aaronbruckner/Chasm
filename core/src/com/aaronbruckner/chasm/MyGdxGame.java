@@ -4,6 +4,9 @@ import com.aaronbruckner.chasm.stages.ClearLevelStage;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MyGdxGame extends ApplicationAdapter {
 	private ClearLevelStage clearLevelStage;
@@ -11,14 +14,18 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void create () {
         Gdx.gl.glClearColor(0, 0, 0, 1);
-        clearLevelStage = new ClearLevelStage();
+        clearLevelStage = new ClearLevelStage(new FitViewport(2000,2000));
         Gdx.input.setInputProcessor(clearLevelStage);
 	}
+
+    public void resize(int width, int height){
+        clearLevelStage.getViewport().update(width, height, true);
+    }
 
 	@Override
 	public void render () {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        clearLevelStage.act(Gdx.graphics.getDeltaTime());
+        clearLevelStage.act();
         clearLevelStage.draw();
 	}
 
