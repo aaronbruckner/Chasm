@@ -1,8 +1,7 @@
 package com.aaronbruckner.chasm.stages;
 
 import com.aaronbruckner.chasm.actors.Map;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
+import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.aaronbruckner.chasm.actors.SquadMember;
@@ -15,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by aaronbruckner on 12/13/2015.
  */
 public class ClearLevelStage extends Stage {
+    private MovableCameraHandler movableCameraHandler;
+
     public ClearLevelStage(){
         super();
         init();
@@ -31,6 +32,7 @@ public class ClearLevelStage extends Stage {
     }
 
     private void init(){
+        movableCameraHandler = new MovableCameraHandler(getViewport());
         addActor(new Map());
         addActor(new SquadMember());
     }
@@ -38,7 +40,7 @@ public class ClearLevelStage extends Stage {
     @Override
     public void act(float delta){
         super.act(delta);
-
+        movableCameraHandler.pollInput();
     }
 
     @Override
@@ -49,6 +51,5 @@ public class ClearLevelStage extends Stage {
     @Override
     public void dispose(){
         super.dispose();
-
     }
 }
