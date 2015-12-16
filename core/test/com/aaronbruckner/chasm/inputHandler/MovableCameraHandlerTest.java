@@ -4,13 +4,16 @@ import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.TestCase.*;
 import static org.mockito.AdditionalMatchers.*;
 
 import static org.mockito.Mockito.*;
@@ -28,7 +31,7 @@ public class MovableCameraHandlerTest {
     @Mock
     private Input mockInput;
     @Mock
-    private Camera mockCamera;
+    private OrthographicCamera mockCamera;
     @Mock
     private Graphics mockGraphics;
 
@@ -43,7 +46,7 @@ public class MovableCameraHandlerTest {
         movableCameraHandler = new MovableCameraHandler(mockViewport);
     }
 
-    //region Keyboard
+    //region Panning
     @Test
     public void shouldPanRightOnInput(){
         when(mockInput.isKeyPressed(Input.Keys.RIGHT)).thenReturn(true);
@@ -79,5 +82,39 @@ public class MovableCameraHandlerTest {
 
         verify(mockCamera).translate(eq(0f), lt(0f), eq(0f));
     }
-    //endregion Keyboard
+    //endregion Panning
+
+    //region Zooming
+    @Test
+    public void shouldZoomInWhenScrolledUp(){
+        float originalZoom = 1f;
+        mockCamera.zoom = originalZoom;
+
+        movableCameraHandler.scrolled(-1);
+
+        assertTrue("Zoom should have decreased when scrolled up", mockCamera.zoom < originalZoom);
+    }
+
+    @Test
+    public void shouldZoomOutWhenScrolledDown(){
+        float originalZoom = 1f;
+        mockCamera.zoom = originalZoom;
+
+        movableCameraHandler.scrolled(1);
+
+        assertTrue("Zoom should have increased when scrolled up", mockCamera.zoom > originalZoom);
+    }
+
+    @Test
+    public void zoomShouldNeverBeLessThanZero(){
+        mockCamera.zoom = 0.01f;
+
+        int i = 0;
+        while(i++ < 100){
+            movableCameraHandler.scrolled(-1);
+        }
+
+        assertTrue("Zoom should be greater than zero", mockCamera.zoom > 0);
+    }
+    //endregion Zooming
 }

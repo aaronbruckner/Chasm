@@ -15,7 +15,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void create () {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         clearLevelStage = new ClearLevelStage(new FitViewport(2000,2000));
-        Gdx.input.setInputProcessor(clearLevelStage);
 	}
 
     public void resize(int width, int height){

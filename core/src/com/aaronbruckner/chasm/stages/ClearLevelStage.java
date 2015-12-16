@@ -2,6 +2,8 @@ package com.aaronbruckner.chasm.stages;
 
 import com.aaronbruckner.chasm.actors.Map;
 import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.aaronbruckner.chasm.actors.SquadMember;
@@ -32,9 +34,14 @@ public class ClearLevelStage extends Stage {
     }
 
     private void init(){
-        movableCameraHandler = new MovableCameraHandler(getViewport());
         addActor(new Map());
         addActor(new SquadMember());
+        movableCameraHandler = new MovableCameraHandler(getViewport());
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(movableCameraHandler);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
