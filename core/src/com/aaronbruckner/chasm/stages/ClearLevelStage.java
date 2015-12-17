@@ -2,9 +2,12 @@ package com.aaronbruckner.chasm.stages;
 
 import com.aaronbruckner.chasm.actors.Map;
 import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
+import com.aaronbruckner.chasm.inputHandlers.SquadMovementHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.aaronbruckner.chasm.actors.SquadMember;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -15,8 +18,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  *
  * Created by aaronbruckner on 12/13/2015.
  */
-public class ClearLevelStage extends Stage {
+public class ClearLevelStage extends Stage implements SquadMovementHandler.Listener {
+    private Group squadGroup;
+    private SquadMember selectedSquadMember;
+
+    //region Input Handlers
     private MovableCameraHandler movableCameraHandler;
+    private SquadMovementHandler squadMovementHandler;
+    //endregion Input Handlers
+
+    //region  Temporary variables for reuse to avoid garbage collection
+    private Vector2 tempVector;
+    //endregion
 
     public ClearLevelStage(){
         super();
@@ -34,14 +47,27 @@ public class ClearLevelStage extends Stage {
     }
 
     private void init(){
+        tempVector = new Vector2();
+        squadGroup = new Group();
+        squadGroup.addActor(new SquadMember());
         addActor(new Map());
-        addActor(new SquadMember());
+        addActor(squadGroup);
+
         movableCameraHandler = new MovableCameraHandler(getViewport());
+        squadMovementHandler = new SquadMovementHandler(squadGroup, this);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(movableCameraHandler);
+        inputMultiplexer.addProcessor(squadMovementHandler);
+        inputMultiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(inputMultiplexer);
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button){
+//        screenToStageCoordinates(tempVector.set(screenX, screenY));
+
+        return false;
     }
 
     @Override
@@ -58,5 +84,10 @@ public class ClearLevelStage extends Stage {
     @Override
     public void dispose(){
         super.dispose();
+    }
+
+    @Override
+    public void onSquadMemberSelected(SquadMember selectedSquadMember) {
+        this.selectedSquadMember = selectedSquadMember;
     }
 }
