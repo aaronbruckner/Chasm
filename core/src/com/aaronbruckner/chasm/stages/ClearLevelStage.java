@@ -1,8 +1,9 @@
 package com.aaronbruckner.chasm.stages;
 
+import com.aaronbruckner.chasm.actors.Enemy;
 import com.aaronbruckner.chasm.actors.Map;
 import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
-import com.aaronbruckner.chasm.inputHandlers.SquadMovementHandler;
+import com.aaronbruckner.chasm.inputHandlers.SquadActionHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -18,13 +19,14 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  *
  * Created by aaronbruckner on 12/13/2015.
  */
-public class ClearLevelStage extends Stage implements SquadMovementHandler.Listener {
+public class ClearLevelStage extends Stage implements EnvironmentDataProvider, SquadActionHandler.Listener {
     private Group squadGroup;
+    private Group enemyGroup;
     private SquadMember selectedSquadMember;
 
     //region Input Handlers
     private MovableCameraHandler movableCameraHandler;
-    private SquadMovementHandler squadMovementHandler;
+    private SquadActionHandler squadActionHandler;
     //endregion Input Handlers
 
     //region  Temporary variables for reuse to avoid garbage collection
@@ -50,23 +52,24 @@ public class ClearLevelStage extends Stage implements SquadMovementHandler.Liste
         tempVector = new Vector2();
         squadGroup = new Group();
         squadGroup.addActor(new SquadMember());
+        enemyGroup = new Group();
+        enemyGroup.addActor(new Enemy());
         addActor(new Map());
         addActor(squadGroup);
+        addActor(enemyGroup);
 
         movableCameraHandler = new MovableCameraHandler(getViewport());
-        squadMovementHandler = new SquadMovementHandler(squadGroup, this);
+        squadActionHandler = new SquadActionHandler(squadGroup, this);
 
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(movableCameraHandler);
-        inputMultiplexer.addProcessor(squadMovementHandler);
+        inputMultiplexer.addProcessor(squadActionHandler);
         inputMultiplexer.addProcessor(this);
         Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button){
-//        screenToStageCoordinates(tempVector.set(screenX, screenY));
-
         return false;
     }
 
@@ -90,4 +93,11 @@ public class ClearLevelStage extends Stage implements SquadMovementHandler.Liste
     public void onSquadMemberSelected(SquadMember selectedSquadMember) {
         this.selectedSquadMember = selectedSquadMember;
     }
+
+    //region EnvironmentDataProvider Interface
+    @Override
+    public Group getEnemyGroup() {
+        return enemyGroup;
+    }
+    //endregion EnvironmentDataProvider Interface
 }

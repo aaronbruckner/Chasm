@@ -18,7 +18,7 @@ public class SquadMember extends Actor{
 
     public SquadMember(){
         super();
-        setBounds(1, 1, 50, 50);
+        setBounds(1, 1, 100, 100);
         //TODO: Dispose Texture
         texture = new Texture(Gdx.files.internal("actors/squadMembers/squadMember.png"));
     }

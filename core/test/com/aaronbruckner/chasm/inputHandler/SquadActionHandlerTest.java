@@ -1,7 +1,7 @@
 package com.aaronbruckner.chasm.inputHandler;
 
 import com.aaronbruckner.chasm.actors.SquadMember;
-import com.aaronbruckner.chasm.inputHandlers.SquadMovementHandler;
+import com.aaronbruckner.chasm.inputHandlers.SquadActionHandler;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
@@ -16,28 +16,26 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.TestCase.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
- * Tests for {@link SquadMovementHandler}
+ * Tests for {@link SquadActionHandler}
  *
  * Created by aaronbruckner on 12/15/2015.
  */
-public class SquadMovementHandlerTest {
-    private SquadMovementHandler squadMovementHandler;
+public class SquadActionHandlerTest {
+    private SquadActionHandler squadActionHandler;
     private ArgumentCaptor<Action> actionCaptor;
 
     @Mock
     private Group mockGroup;
     @Mock
-    private SquadMovementHandler.Listener mockListener;
+    private SquadActionHandler.Listener mockListener;
     @Mock
     private SquadMember mockSquadMember;
     @Mock
@@ -63,7 +61,7 @@ public class SquadMovementHandlerTest {
         });
 
         actionCaptor = ArgumentCaptor.forClass(Action.class);
-        squadMovementHandler = new SquadMovementHandler(mockGroup, mockListener);
+        squadActionHandler = new SquadActionHandler(mockGroup, mockListener);
     }
 
     //region Squad Selection
@@ -71,7 +69,7 @@ public class SquadMovementHandlerTest {
     public void shouldNotNotifyListenerIfNoMemberSelected(){
         when(mockGroup.hit(50, 100, true)).thenReturn(null);
 
-        squadMovementHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
+        squadActionHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
 
         verify(mockListener, never()).onSquadMemberSelected(any(SquadMember.class));
     }
@@ -80,7 +78,7 @@ public class SquadMovementHandlerTest {
     public void shouldOnlyRespondToLeftClick(){
         when(mockGroup.hit(50, 100, true)).thenReturn(mockSquadMember);
 
-        squadMovementHandler.touchUp(100, 200, 0, Input.Buttons.RIGHT);
+        squadActionHandler.touchUp(100, 200, 0, Input.Buttons.RIGHT);
 
         verify(mockListener, never()).onSquadMemberSelected(any(SquadMember.class));
     }
@@ -89,7 +87,7 @@ public class SquadMovementHandlerTest {
     public void shouldNotifyListenerWhenSquadMemberSelected(){
         when(mockGroup.hit(50, 100, true)).thenReturn(mockSquadMember);
 
-        squadMovementHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
+        squadActionHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
 
         verify(mockListener).onSquadMemberSelected(mockSquadMember);
     }
@@ -100,7 +98,7 @@ public class SquadMovementHandlerTest {
     public void noMovementActionIfSquadMemberIsUnselected(){
         when(mockGroup.hit(50, 100, true)).thenReturn(mockSquadMember);
 
-        squadMovementHandler.touchUp(400, 400, 0, Input.Buttons.LEFT);
+        squadActionHandler.touchUp(400, 400, 0, Input.Buttons.LEFT);
 
         verify(mockStage, never()).addAction(any(Action.class));
     }
@@ -110,9 +108,9 @@ public class SquadMovementHandlerTest {
         when(mockGroup.hit(50, 100, true)).thenReturn(mockSquadMember);
 
         //Select Squad Member
-        squadMovementHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
+        squadActionHandler.touchUp(100, 200, 0, Input.Buttons.LEFT);
         //Issue Movement command
-        squadMovementHandler.touchUp(300, 400, 0, Input.Buttons.LEFT);
+        squadActionHandler.touchUp(300, 400, 0, Input.Buttons.LEFT);
 
         verify(mockStage).addAction(actionCaptor.capture());
         MoveToAction action = (MoveToAction)actionCaptor.getValue();
