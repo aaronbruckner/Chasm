@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="60" tilewidth="64" tileheight="64" nextobjectid="1">
+ <tileset firstgid="1" name="Stone Walls" tilewidth="64" tileheight="64" tilecount="52">
+  <image source="../spriteSets/wallTiles.png" width="832" height="256"/>
+  <tile id="4">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+  <tile id="49">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+  <tile id="50">
+   <properties>
+    <property name="impassable" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="60">
+  <data encoding="base64" compression="zlib">
+   eJzll0tyxDAIRL2ZE8wFskkOkNz/bnEWqXJRqNV8LNDMohe2PuaBQPjnOI7Hm+j71PPUx5voKXgfDWzqzns9L9U8d/NeOTOYZ/nHzEE2RHi1vT3MrK0ZPvPyItusdqN9ouxSEV6vP9Be2bHO4GVt8fJmM0Z4rfe7h9f7DWaOhdeTl5nngPHVzAYrr8ce5szI+cwdxPJen1neSP2w8jJ73MkbrZWz9Z14s3sAD6+2luWV6vC/wNRYbfwVeD1r0R0Yqc938kZk2asD70pl81rjsROvh6eaOfK/EOk/qpi9/wvR71Yxe3itTGzP1I3XU/8Rd0UNi/wfWW0dzd+JF3Ex/U53XtSvMv3uaF1HXjmucaF1Mp934vXYjHzVkRcxMmd0R15k/+h5lsM78VrrF7OuK698x/QPO99HyAfeWO/Ay/aZoz1XsWbwMmOe/TrwXm2c9VLonDN53oVXY2D9UsEX4UUxrebI5JWclffnKl707hV5Z70j+kYnf/zzzuoLqjueml4lGV8Lh4WX2WeFVvF2UBZv1B8rxfLO7lk0Lu+xHfLXwmqtZyvF8M5ip52D0bvu+etlZc/Gannr1YgV7VMd31n+sqyMbyz73ykrL5Ov2lgHXXlH4xrDiB3N7SJLfK11qFPeovxFdkp29ix00YxXs52Nc3UstXh4eDUu1r/V+mP9IvzzKvo89QuuJVvA
+  </data>
+ </layer>
+</map>
