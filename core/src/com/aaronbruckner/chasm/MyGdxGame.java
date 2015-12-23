@@ -14,7 +14,6 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void create () {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
         clearLevelStage = new ClearLevelStage(new FitViewport(2000,2000));
 	}
 
@@ -24,6 +23,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         clearLevelStage.act();
         clearLevelStage.draw();

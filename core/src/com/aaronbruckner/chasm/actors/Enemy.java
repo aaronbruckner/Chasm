@@ -12,13 +12,14 @@ public class Enemy extends Actor {
     private Texture texture;
     public Enemy(){
         super();
-        setBounds(1500, 900, 100, 100);
+        setBounds(1500, 900, 64, 64);
+        setSize(64,64);
         //TODO: Dispose Texture
         texture = new Texture(Gdx.files.internal("actors/enemies/badGuy.png"));
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        batch.draw(texture, getX(), getY());
+        batch.draw(texture, getX(), getY(),getWidth(), getHeight());
     }
 }

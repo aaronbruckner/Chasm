@@ -18,14 +18,15 @@ public class SquadMember extends Actor{
 
     public SquadMember(){
         super();
-        setBounds(1, 1, 100, 100);
+        setBounds(64, 64, 64, 64);
+        setSize(64, 64);
         //TODO: Dispose Texture
         texture = new Texture(Gdx.files.internal("actors/squadMembers/squadMember.png"));
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha){
-        batch.draw(texture, getX(), getY());
+        batch.draw(texture, getX(), getY(),getWidth(), getHeight());
     }
 
 }

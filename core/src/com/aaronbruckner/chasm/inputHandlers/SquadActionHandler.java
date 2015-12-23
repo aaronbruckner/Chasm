@@ -22,7 +22,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 public class SquadActionHandler extends InputPollingHandler{
     private Group squadGroup;
     private Stage stage;
-    private EnvironmentDataProvider dataProvider;
     private SquadMember selectedSquadMember;
     private Listener listener;
     private Vector2 tempVector;
@@ -35,7 +34,6 @@ public class SquadActionHandler extends InputPollingHandler{
         this.squadGroup = squadGroup;
         this.listener = listener;
         stage = squadGroup.getStage();
-        dataProvider = (EnvironmentDataProvider)stage;
 
         //region Temporary variables to avoid garbage collection
         tempVector = new Vector2();

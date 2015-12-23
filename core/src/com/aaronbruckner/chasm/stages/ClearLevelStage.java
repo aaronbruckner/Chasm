@@ -6,7 +6,11 @@ import com.aaronbruckner.chasm.inputHandlers.MovableCameraHandler;
 import com.aaronbruckner.chasm.inputHandlers.SquadActionHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +24,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by aaronbruckner on 12/13/2015.
  */
 public class ClearLevelStage extends Stage implements EnvironmentDataProvider, SquadActionHandler.Listener {
+    private TiledMap tiledMap;
+    private OrthogonalTiledMapRenderer mapRenderer;
+    private OrthographicCamera camera;
     private Group squadGroup;
     private Group enemyGroup;
     private SquadMember selectedSquadMember;
@@ -50,11 +57,16 @@ public class ClearLevelStage extends Stage implements EnvironmentDataProvider, S
 
     private void init(){
         tempVector = new Vector2();
+
+        tiledMap = new TmxMapLoader().load("maps/prototypeMap.tmx");
+        mapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+        camera = (OrthographicCamera)getCamera();
+
         squadGroup = new Group();
         squadGroup.addActor(new SquadMember());
         enemyGroup = new Group();
         enemyGroup.addActor(new Enemy());
-        addActor(new Map());
+//        addActor(new Map());
         addActor(squadGroup);
         addActor(enemyGroup);
 
@@ -81,12 +93,16 @@ public class ClearLevelStage extends Stage implements EnvironmentDataProvider, S
 
     @Override
     public void draw(){
+        mapRenderer.setView(camera);
+        mapRenderer.render();
         super.draw();
     }
 
     @Override
     public void dispose(){
         super.dispose();
+        tiledMap.dispose();
+        mapRenderer.dispose();
     }
 
     @Override

@@ -65,10 +65,11 @@ public class SquadMemberTest {
     @Test
     public void drawShouldRenderTextureAtCurrentXposYpos(){
         squadMember.setPosition(2f, 3f);
+        squadMember.setSize(5f, 6f);
 
         squadMember.draw(mockBatch, 1f);
 
-        verify(mockBatch).draw(mockTexture, 2f, 3f);
+        verify(mockBatch).draw(mockTexture, 2f, 3f, 5f, 6f);
     }
     //endregion Display
 

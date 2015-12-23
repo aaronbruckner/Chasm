@@ -17,6 +17,7 @@ allprojects {
     ext {
         appName = "Chasm"
         gdxVersion = '1.7.1'
+        gdxAI = '1.7.0'
         roboVMVersion = '1.9.0'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
@@ -93,6 +94,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-ai:$gdxAI"
 
         testCompile "junit:junit:$junit"
         testCompile "org.powermock:powermock-mockito-release-full:$powerMockito"
